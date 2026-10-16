@@ -1,0 +1,15 @@
+{
+  "name": "pods",
+  "private": true,
+  "description": "POD5: hold one coin, receive the top five orcapod.fun coins every 15 minutes.",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "install:all": "npm --prefix keeper ci && npm --prefix web ci",
+    "typecheck": "npm --prefix keeper run typecheck && npm --prefix web run typecheck",
+    "test": "npm --prefix keeper test",
+    "build": "npm --prefix web run build",
+    "dev": "npm --prefix web run dev",
+    "dry-run": "npm --prefix keeper run round -- --dry-run",
+    "check": "npm run typecheck && npm test && npm run build"
+  }
+}

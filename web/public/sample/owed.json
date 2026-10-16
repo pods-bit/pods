@@ -1,0 +1,19 @@
+{
+ "updatedAt": 1792067200,
+ "owed": {
+  "Rb7dG1oETJCxrRBqt59ggV991x1ErEBxBKMDbykhECmD": {
+   "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6": "1843200"
+  },
+  "zRL2QTBAH5NLufe1fknN5LPuLXmMCXXnC4H2pPwS2cs": {
+   "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6": "12750"
+  }
+ },
+ "delivered": {
+  "Rb7dG1oETJCxrRBqt59ggV991x1ErEBxBKMDbykhECmD": {
+   "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6": "26418350"
+  },
+  "zRL2QTBAH5NLufe1fknN5LPuLXmMCXXnC4H2pPwS2cs": {
+   "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6": "903100"
+  }
+ }
+}

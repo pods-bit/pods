@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POD5 Project Plan</title>
+<meta name="description" content="Plan for POD5: a coin on orcapod.fun whose creator fee buys the top five Pod coins every 15 minutes and distributes them to holders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* Tokens follow DESIGN.md (Cohere-inspired). Proprietary faces fall back to the documented alternatives. */
+  :root {
+    --primary: #17171c;
+    --black: #000000;
+    --ink: #212121;
+    --deep-green: #003c33;
+    --canvas: #ffffff;
+    --soft-stone: #eeece7;
+    --pale-green: #edfce9;
+    --hairline: #d9d9dd;
+    --border-light: #e5e7eb;
+    --muted: #93939f;
+    --slate: #75758a;
+    --body-muted: #616161;
+    --action-blue: #1863dc;
+    --focus-blue: #4c6ee6;
+    --coral: #ff7759;
+    --coral-soft: #ffad9b;
+    --on-dark: #ffffff;
+    --band: var(--deep-green);
+    --band-card: rgba(255, 255, 255, .06);
+    --band-rule: rgba(255, 255, 255, .16);
+    --console: var(--primary);
+
+    --font-display: "CohereText", "Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Unica77 Cohere Web", Inter, Arial, ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "CohereMono", "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+    --r-xs: 4px; --r-sm: 8px; --r-md: 16px; --r-lg: 22px; --r-xl: 30px; --r-pill: 32px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --canvas: #0f1012;
+      --ink: #ececef;
+      --black: #ffffff;
+      --primary: #ececef;
+      --soft-stone: #1c1d21;
+      --hairline: #2c2d33;
+      --border-light: #26272c;
+      --muted: #8b8b97;
+      --slate: #a2a2b3;
+      --body-muted: #b4b4bd;
+      --action-blue: #6c9cf0;
+      --band: #00302a;
+      --console: #000000;
+    }
+  }
+  :root[data-theme="dark"] {
+    --canvas: #0f1012;
+    --ink: #ececef;
+    --black: #ffffff;
+    --primary: #ececef;
+    --soft-stone: #1c1d21;
+    --hairline: #2c2d33;
+    --border-light: #26272c;
+    --muted: #8b8b97;
+    --slate: #a2a2b3;
+    --body-muted: #b4b4bd;
+    --action-blue: #6c9cf0;
+    --band: #00302a;
+    --console: #000000;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font: 400 16px/1.5 var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--action-blue); }
+  :focus-visible { outline: 2px solid var(--focus-blue); outline-offset: 2px; }
+
+  .announce {
+    background: #000; color: #fff; font-size: 12px; line-height: 1.4;
+    min-height: 36px; display: flex; align-items: center; justify-content: center;
+    padding: 8px 16px; text-align: center;
+  }
+  .announce a { color: #fff; margin-left: 6px; }
+
+  .nav {
+    max-width: 1200px; margin: 0 auto; padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { font-family: var(--font-display); font-size: 22px; letter-spacing: -.4px; color: var(--black); text-decoration: none; }
+  .nav-actions { display: flex; align-items: center; gap: 20px; }
+  .link-btn {
+    background: none; border: 0; padding: 8px 0; font: inherit; font-size: 14px; color: var(--ink);
+    text-decoration: underline; text-underline-offset: 4px; cursor: pointer;
+  }
+  .btn-primary {
+    display: inline-block; background: var(--primary); color: var(--canvas);
+    font: 500 14px/1.71 var(--font-body); padding: 12px 24px; border-radius: var(--r-pill);
+    text-decoration: none; border: 0;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .mono {
+    font-family: var(--font-mono); font-size: 14px; line-height: 1.4; letter-spacing: .28px;
+    text-transform: uppercase; color: var(--slate);
+  }
+
+  /* Hero */
+  .hero { padding: 88px 0 72px; text-align: center; }
+  .hero h1 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(44px, 8vw, 96px); line-height: 1; letter-spacing: -0.02em;
+    color: var(--black); margin: 20px auto 28px; max-width: 1000px;
+  }
+  .hero p.lede { font-size: 18px; line-height: 1.4; color: var(--body-muted); max-width: 680px; margin: 0 auto 32px; }
+  .hero .ctas { display: flex; gap: 24px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .ctas .link-btn { font-size: 16px; }
+
+  /* Stats strip (trust-strip style: quiet, no boxes) */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+    margin-top: 24px;
+  }
+  .stat { padding: 28px 20px; text-align: center; }
+  .stat + .stat { border-left: 1px solid var(--hairline); }
+  .stat b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 36px; letter-spacing: -.72px; color: var(--black); line-height: 1.1; }
+  .stat span { font-size: 14px; color: var(--muted); }
+
+  /* Sections */
+  section { padding: 80px 0 0; scroll-margin-top: 16px; }
+  .section-head { display: grid; grid-template-columns: 280px 1fr; gap: 32px; margin-bottom: 40px; }
+  .section-head h2 {
+    font-weight: 400; font-size: clamp(32px, 4.4vw, 48px); line-height: 1.2; letter-spacing: -0.48px;
+    margin: 0; color: var(--black);
+  }
+  .section-head p { font-size: 18px; line-height: 1.4; color: var(--body-muted); margin: 10px 0 0; }
+  h3 { font-weight: 400; font-size: 24px; line-height: 1.3; margin: 0 0 10px; color: var(--black); }
+  p { margin: 0 0 12px; }
+  code { font-family: var(--font-mono); font-size: .86em; background: var(--soft-stone); padding: 2px 6px; border-radius: var(--r-xs); overflow-wrap: anywhere; }
+
+  /* Context: two unframed columns with top rules */
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .col { border-top: 1px solid var(--black); padding-top: 20px; }
+  .col ul { margin: 0; padding: 0; list-style: none; }
+  .col li { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+  .chip {
+    display: inline-block; font-size: 14px; padding: 4px 12px; border-radius: var(--r-sm);
+    border: 1px solid var(--coral-soft); color: var(--coral); margin-bottom: 14px;
+  }
+  .chip.solid { background: var(--coral); border-color: var(--coral); color: #17171c; }
+  .note { font-size: 14px; color: var(--body-muted); margin-top: 24px; }
+
+  /* Dark feature band: fee flow */
+  .band {
+    background: var(--band); color: var(--on-dark); border-radius: var(--r-lg);
+    padding: 80px 64px; margin-top: 80px;
+  }
+  .band .mono { color: rgba(255,255,255,.66); }
+  .band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(36px, 5.5vw, 72px); line-height: 1; letter-spacing: -0.02em; margin: 16px 0 16px; color: #fff; }
+  .band .lead { font-size: 18px; line-height: 1.4; color: rgba(255,255,255,.78); max-width: 640px; margin-bottom: 48px; }
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .flow-step { background: var(--band-card); border: 1px solid var(--band-rule); border-radius: var(--r-sm); padding: 20px; }
+  .flow-step .n { font-family: var(--font-mono); font-size: 13px; color: var(--coral-soft); letter-spacing: .28px; }
+  .flow-step b { display: block; font-weight: 400; font-size: 18px; line-height: 1.3; margin: 12px 0 8px; color: #fff; }
+  .flow-step span { font-size: 14px; line-height: 1.4; color: rgba(255,255,255,.72); }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .split div { border-top: 1px solid var(--band-rule); padding-top: 16px; }
+  .split strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: 48px; line-height: 1; letter-spacing: -.96px; color: #fff; margin-bottom: 8px; }
+  .split span { color: rgba(255,255,255,.72); font-size: 14px; }
+  .band .econ { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--band-rule); color: rgba(255,255,255,.82); font-size: 16px; max-width: 760px; }
+  .band .econ b { color: #fff; font-weight: 500; }
+
+  /* Rule-separated rows (research-table style) */
+  .rows { border-top: 1px solid var(--black); }
+  .row { display: grid; grid-template-columns: 64px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--hairline); }
+  .row .k { font-family: var(--font-mono); font-size: 14px; color: var(--slate); letter-spacing: .28px; padding-top: 3px; }
+  .row b { font-weight: 500; color: var(--black); }
+  .row p { margin: 0; font-size: 18px; line-height: 1.4; }
+
+  /* Check rows */
+  .checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--black); }
+  .checks li { position: relative; padding: 18px 0 18px 36px; border-bottom: 1px solid var(--hairline); font-size: 18px; line-height: 1.4; }
+  .checks li::before { content: "✓"; position: absolute; left: 4px; top: 18px; color: var(--deep-green); }
+  :root[data-theme="dark"] .checks li::before { color: #7fd6b9; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .checks li::before { color: #7fd6b9; } }
+
+  .callout { background: var(--pale-green); color: #17171c; border-radius: var(--r-lg); padding: 32px; margin-top: 32px; display: grid; grid-template-columns: 280px 1fr; gap: 32px; }
+  .callout h3 { color: #17171c; margin: 0; }
+  .callout p { margin: 0; font-size: 18px; line-height: 1.4; }
+
+  /* Product cards (soft stone) */
+  .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .pcard { background: var(--soft-stone); border-radius: var(--r-sm); padding: 32px; }
+  .pcard .mono { font-size: 13px; }
+  .pcard h3 { margin: 14px 0 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline); }
+  .pcard p { margin: 0; color: var(--body-muted); }
+
+  /* Agent console card */
+  .console { background: var(--console); color: #fff; border-radius: var(--r-sm); padding: 24px; overflow-x: auto; }
+  .console .bar { display: flex; gap: 8px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
+  .status { font-family: var(--font-mono); font-size: 12px; letter-spacing: .28px; padding: 3px 10px; border-radius: 9999px; background: rgba(255,255,255,.08); color: rgba(255,255,255,.8); }
+  .status.live { background: rgba(127,214,185,.16); color: #7fd6b9; }
+  .console pre { margin: 0; font-family: var(--font-mono); font-size: 13px; line-height: 1.65; color: rgba(255,255,255,.88); }
+  .console pre .c { color: rgba(255,255,255,.45); }
+
+  /* Table (research-table) */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-family: var(--font-mono); font-weight: 400; font-size: 13px; letter-spacing: .28px; text-transform: uppercase; color: var(--slate); text-align: left; padding: 0 16px 14px 0; border-bottom: 1px solid var(--black); }
+  td { padding: 22px 16px 22px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; font-size: 16px; }
+  td.title { font-size: 18px; color: var(--black); white-space: nowrap; }
+  td.when { white-space: nowrap; }
+  .pill-o { display: inline-block; font-size: 13px; padding: 4px 12px; border-radius: var(--r-xl); border: 1px solid var(--ink); white-space: nowrap; }
+
+  .tunables { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tunables span { font-family: var(--font-mono); font-size: 13px; padding: 6px 14px; border: 1px solid var(--hairline); border-radius: var(--r-xl); }
+
+  footer { background: #17171c; color: #fff; margin-top: 96px; }
+  footer .wrap { padding-top: 56px; padding-bottom: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  footer .label { color: var(--coral); font-size: 14px; margin-bottom: 10px; }
+  footer h3 { color: #fff; font-size: 32px; letter-spacing: -.32px; line-height: 1.2; }
+  footer p { font-size: 12px; color: #93939f; margin: 0; }
+  footer code { background: rgba(255,255,255,.08); color: #ddd; }
+
+  @media (max-width: 1024px) {
+    .flow { grid-template-columns: 1fr 1fr; }
+    .flow-step:first-child { grid-column: 1 / -1; }
+    .band { padding: 56px 32px; }
+  }
+  @media (max-width: 768px) {
+    .wrap, .nav { padding-left: 16px; padding-right: 16px; }
+    .hero { padding: 56px 0 48px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+    .section-head, .cols2, .callout, footer .wrap { grid-template-columns: 1fr; gap: 16px; }
+    .cards3 { grid-template-columns: 1fr; }
+    section { padding-top: 64px; }
+    .band { padding: 40px 20px; margin-top: 64px; border-radius: var(--r-md); }
+    .flow { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 40px 1fr; gap: 12px; }
+    .row p, .checks li, .callout p { font-size: 16px; }
+    td.title { white-space: normal; }
+    .nav-actions .link-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">Research snapshot from October 7, 2026. “POD5” is a working name.<a href="#verify">How we'll test it</a></div>
+
+<div class="nav">
+  <a class="brand" href="#top">POD5</a>
+  <div class="nav-actions">
+    <button class="link-btn" type="button" id="themeToggle">Switch theme</button>
+    <a class="btn-primary" href="#milestones">See the timeline</a>
+  </div>
+</div>
+
+<main class="wrap" id="top">
+
+  <div class="hero">
+    <div class="mono">Project plan · naviklabs</div>
+    <h1>Hold one coin. Receive the top five on Pod.</h1>
+    <p class="lede">An ember5-style coin launched on orcapod.fun. Every 15 minutes, its creator fee buys the five biggest Pod coins in equal slices and sends them to POD5 holders in proportion to their holdings. Nothing to claim or stake.</p>
+    <div class="ctas">
+      <a class="btn-primary" href="#flow">How the fee flows</a>
+      <a class="link-btn" href="#round">One round, step by step</a>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>90</b><span>coins on Pod</span></div>
+    <div class="stat"><b>~10 days</b><span>since Pod launched</span></div>
+    <div class="stat"><b>$1.28M</b><span>$POD market cap</span></div>
+    <div class="stat"><b>$12–$1.5K</b><span>liquidity of most other top-10 coins</span></div>
+  </div>
+
+  <section id="context">
+    <div class="section-head">
+      <div class="mono">01 · Context</div>
+      <div>
+        <h2>ember5 proves the model. Pod has the plumbing.</h2>
+      </div>
+    </div>
+    <div class="cols2">
+      <div class="col">
+        <span class="chip">Reference · ember5.xyz</span>
+        <h3>How EMBER5 works</h3>
+        <ul>
+          <li>Trading fees go to a keeper wallet.</li>
+          <li>Each round buys the top five embercurve coins by market cap, after filtering, in equal slices through Jupiter.</li>
+          <li>Wallets holding at least $30 of EMBER5 are credited by balance, using the amounts that actually arrived.</li>
+          <li>Coins are pushed to holders. A small share waits until it's worth more than the token-account rent.</li>
+          <li>Pool vaults and other program-owned addresses are excluded.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <span class="chip solid">Our base · orcapod.fun</span>
+        <h3>What Pod gives us</h3>
+        <ul>
+          <li>Each coin gets its own Orca Whirlpool from the first block, with liquidity locked.</li>
+          <li>A flat 2% fee on every trade: 70% to the creator's module and 30% to the platform, which buys and burns $POD.</li>
+          <li>The Harbor &amp; Crew module pays that 70% to a wallet about every 15 minutes, in SOL.</li>
+          <li>An open JSON API with market cap, liquidity, holders, volume and a “suspect” flag for every coin.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Pod's own “Cargo” basket module can only buy whitelisted tokenized stocks plus JUP. It can't hold Pod memes, so we run our own keeper.</p>
+  </section>
+
+  <div class="band" id="flow">
+    <div class="mono">02 · Fee flow</div>
+    <h2>From one trade to five coins in a wallet.</h2>
+    <p class="lead">Pod handles fee collection. Our keeper turns that SOL into the basket and delivers it.</p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="n">01</div>
+        <b>Someone trades POD5</b>
+        <span>The trade pays Pod's flat 2% fee.</span>
+        <div class="split">
+          <div><strong>70%</strong><span>Harbor module, paid as SOL to our keeper</span></div>
+          <div><strong>30%</strong><span>Pod platform, buys and burns $POD</span></div>
+        </div>
+      </div>
+      <div class="flow-step"><div class="n">02</div><b>Keeper wakes every 15 min</b><span>Pot = keeper SOL minus an operating reserve and this round's network fees.</span></div>
+      <div class="flow-step"><div class="n">03</div><b>Pick the top five</b><span>Rank Pod coins by market cap; keep the first five that pass the safety filters.</span></div>
+      <div class="flow-step"><div class="n">04</div><b>Buy equal slices</b><span>One Jupiter swap per coin. We record what actually arrived, not the quote.</span></div>
+      <div class="flow-step"><div class="n">05</div><b>Distribute by holding</b><span>Each eligible holder is credited by balance and the coins are pushed to them.</span></div>
+    </div>
+    <p class="econ">On <b>$1,000</b> of POD5 trading, the keeper receives <b>$14</b> in SOL. Three costs come out before holders receive anything: each target coin's own 2% Pod fee on our buy, price impact, and network fees plus account rent.</p>
+  </div>
+
+  <section id="basket">
+    <div class="section-head">
+      <div class="mono">03 · Basket rules</div>
+      <div>
+        <h2>Up to five coins, ranked by market cap.</h2>
+        <p>If fewer than five pass every filter, the pot is split between the ones that do.</p>
+      </div>
+    </div>
+    <ul class="checks">
+      <li>Not flagged <code>suspect</code> or <code>paused</code> by Pod, and at least 24 hours old.</li>
+      <li>Pool liquidity of at least $5K. Each buy is capped at about 1% of the pool, and anything over the cap rolls into the next round.</li>
+      <li>At least 50 holders, $1K of 24-hour volume and 20 trades in 24 hours.</li>
+      <li>No freeze authority, no mint authority, and no risky Token-2022 extensions.</li>
+      <li>A Jupiter route exists for SOL to the coin, with price impact of 3% or less on top of Pod's 2% fee.</li>
+      <li>Coins are identified by mint address, never by ticker. Pod already has three ORCATs and two PODCATs.</li>
+    </ul>
+    <div class="callout">
+      <h3>What this means today</h3>
+      <p>With Pod's current liquidity, only one or two coins would pass. We should market POD5 as “up to five”. The basket fills out as Pod grows.</p>
+    </div>
+  </section>
+
+  <section id="round">
+    <div class="section-head">
+      <div class="mono">04 · One round</div>
+      <div>
+        <h2>Every 15 minutes, six steps.</h2>
+        <p>A fixed cycle. We dropped ember5's 75% reach gate and kept only the guards that stop fees being wasted.</p>
+      </div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="k">01</div><p><b>Budget.</b> Pot = keeper SOL − 0.05 SOL operating reserve − estimated network fees. If the pot is under 0.05 SOL, skip the round and carry it over.</p></div>
+      <div class="row"><div class="k">02</div><p><b>Snapshot.</b> Read POD5 holders and weight each by balance. Exclude pool vaults and other program addresses, the keeper, the deployer and Pod's wallets. Require a minimum holding of $30 (tunable).</p></div>
+      <div class="row"><div class="k">03</div><p><b>Buy.</b> One Jupiter swap per slice. Credit the actual balance change. A failed or over-impact buy rolls its slice to the next round.</p></div>
+      <div class="row"><div class="k">04</div><p><b>Credit.</b> Each wallet gets <code>floor(received × balance ÷ total)</code> in raw units. Leftover dust carries into the next round. The round is written to the ledger in one database transaction.</p></div>
+      <div class="row"><div class="k">05</div><p><b>Deliver.</b> If a wallet already has an account for that coin, the share is sent immediately. Otherwise it builds up until it's worth more than the ~0.002 SOL account rent, then the account is opened with the rent taken from the share.</p></div>
+      <div class="row"><div class="k">06</div><p><b>Publish.</b> Write a round receipt (buys, signatures, recipients) and the pending-share ledger as public JSON.</p></div>
+    </div>
+    <div class="cards3">
+      <div class="pcard"><div class="mono">Guard 01</div><h3>Liquidity floor</h3><p>Buying into a $12 pool mostly moves the price. Coins below the floor are skipped.</p></div>
+      <div class="pcard"><div class="mono">Guard 02</div><h3>Hold back small shares</h3><p>Opening a token account costs about $0.24. A first send of five coins to 200 holders would cost about $240 in rent, against a pot of about $15 a round at $100K daily volume.</p></div>
+      <div class="pcard"><div class="mono">Guard 03</div><h3>Exclude pool wallets</h3><p>POD5's own pool holds a large share of the supply. Paying by raw balance would pay the pool, not people.</p></div>
+    </div>
+    <p class="note">Crash safety: each step saves its state before sending anything. After a restart, the keeper checks pending signatures on-chain, so nothing is bought or sent twice.</p>
+  </section>
+
+  <section id="build">
+    <div class="section-head">
+      <div class="mono">05 · What we build</div>
+      <div>
+        <h2>One keeper service and a static website.</h2>
+        <p>No public backend. The site reads the chain, Pod's API, Jupiter and the keeper's published receipts.</p>
+      </div>
+    </div>
+    <div class="console">
+      <div class="bar"><span class="status live">keeper · every 15 min</span><span class="status">web · static</span><span class="status">ledger · SQLite</span></div>
+<pre>Meme/
+  keeper/                     <span class="c">Node 20 + TypeScript service</span>
+    src/config.ts             <span class="c">env + tunables</span>
+    src/sources/pod.ts        <span class="c">Pod API client (markets, holders, payouts)</span>
+    src/sources/jupiter.ts    <span class="c">quotes, swaps, prices</span>
+    src/chain/rpc.ts          <span class="c">RPC, priority fees, send + confirm with retry</span>
+    src/chain/mintCheck.ts    <span class="c">freeze / mint authority, Token-2022 checks</span>
+    src/chain/holders.ts      <span class="c">POD5 holder snapshot, PDA + exclusion filtering</span>
+    src/round/selectBasket.ts <span class="c">rank + filter Pod coins → up to 5 mints</span>
+    src/round/plan.ts         <span class="c">pure math: pot, slices, pro-rata, rent gating</span>
+    src/round/buy.ts          <span class="c">per-slice swap, impact cap, actual received</span>
+    src/round/deliver.ts      <span class="c">batched transfers, account creation, confirms</span>
+    src/round/runner.ts       <span class="c">resumable state machine per round</span>
+    src/ledger/db.ts          <span class="c">rounds, credits, pending shares, carry</span>
+    src/publish.ts            <span class="c">round receipts + ledger JSON for the site</span>
+    src/index.ts              <span class="c">scheduler, health check, alerts</span>
+    test/                     <span class="c">vitest unit tests</span>
+  web/                        <span class="c">Vite + TypeScript static site</span>
+    index.html                <span class="c">live pot, last payout, basket table, rounds</span>
+    docs.html                 <span class="c">how it works + FAQ</span>
+  shared/                     <span class="c">shared types + constants</span></pre>
+    </div>
+  </section>
+
+  <section id="launch">
+    <div class="section-head">
+      <div class="mono">06 · Launch on Pod</div>
+      <div><h2>Four steps to go live.</h2></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="k">01</div><p><b>Two wallets.</b> A deployer that signs the Pod launch, and a keeper hot wallet that holds only the working float. The keeper key lives in a secret manager, never in the repo.</p></div>
+      <div class="row"><div class="k">02</div><p><b>Launch at orcapod.fun/create.</b> Pair with SOL, choose the Harbor &amp; Crew module, and set the payout wallet to the keeper. The module can't be changed after launch. Cost is about 0.05 SOL in rent.</p></div>
+      <div class="row"><div class="k">03</div><p><b>Configure.</b> Add the POD5 mint to the keeper config. Add POD5's pool, Pod's platform and treasury wallets, and the deployer to the exclusion list.</p></div>
+      <div class="row"><div class="k">04</div><p><b>Optional.</b> Ask @orcapodfun for the “curated” badge. POD5 sends volume to their coins and burns $POD through their 30% cut, so our incentives line up.</p></div>
+    </div>
+  </section>
+
+  <section id="milestones">
+    <div class="section-head">
+      <div class="mono">07 · Milestones</div>
+      <div><h2>About 3–4 weeks.</h2><p>With one or two developers.</p></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Milestone</th><th>Output</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">00</td><td class="title">Spike</td><td>Launch a throwaway coin to confirm Harbor pays a non-creator wallet in SOL. Confirm Jupiter routes to ORCA-paired Pod coins. Check the top coins' token program and freeze status.</td><td class="when"><span class="pill-o">2–3 days</span></td></tr>
+          <tr><td class="mono">01</td><td class="title">Keeper core</td><td>Pod and Jupiter clients, holder snapshot, round math with tests, SQLite ledger, buy and deliver, resumable runner, dry-run mode.</td><td class="when"><span class="pill-o">1.5 weeks</span></td></tr>
+          <tr><td class="mono">02</td><td class="title">Website</td><td>Live dashboard, basket table, docs and FAQ, wallet checker, round receipts.</td><td class="when"><span class="pill-o">1 week, parallel</span></td></tr>
+          <tr><td class="mono">03</td><td class="title">Hardening</td><td>Priority fees, retries, alerts, a ledger-vs-chain reconcile job, kill switch, key handling.</td><td class="when"><span class="pill-o">3–4 days</span></td></tr>
+          <tr><td class="mono">04</td><td class="title">Launch</td><td>Dry run on live mainnet data, launch POD5, run canary rounds with a small pot cap, then lift the cap.</td><td class="when"><span class="pill-o">Go-live</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="tunables">
+    <div class="section-head">
+      <div class="mono">08 · Tunables</div>
+      <div><h2>Every threshold is a setting.</h2><p>All live in <code>keeper/src/config.ts</code>.</p></div>
+    </div>
+    <div class="tunables">
+      <span>ROUND_INTERVAL_MIN=15</span><span>MIN_POT_SOL=0.05</span><span>OP_RESERVE_SOL=0.05</span>
+      <span>MIN_HOLD_USD=30</span><span>MAX_COINS=5</span><span>MIN_LIQ_USD=5000</span>
+      <span>MAX_SLICE_OF_LIQ=0.01</span><span>MAX_IMPACT_BPS=300</span><span>MIN_HOLDERS=50</span>
+      <span>MIN_VOL24H_USD=1000</span><span>MIN_AGE_H=24</span><span>RENT_MARGIN=1.5×</span><span>POT_CAP_SOL</span>
+    </div>
+  </section>
+
+  <section id="risks">
+    <div class="section-head">
+      <div class="mono">09 · Risks</div>
+      <div><h2>What could go wrong.</h2></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td class="title">Thin ecosystem</td><td>Only one or two coins pass today. Market it as “up to five”. The liquidity floor stops us moving prices against ourselves.</td></tr>
+          <tr><td class="title">Basket gaming</td><td>Someone pumps a micro-cap into the top five to sell into our buys. The age, holder, volume, liquidity and suspect filters plus the impact cap limit this.</td></tr>
+          <tr><td class="title">Pod dependency</td><td>If Harbor payouts stall or the API changes, nothing flows in. Alert when no inflow arrives for several hours, and fall back to chain and Jupiter data.</td></tr>
+          <tr><td class="title">Hot wallet</td><td>Keep only the float, alert on unexpected outflows, and add a kill switch.</td></tr>
+          <tr><td class="title">Legal</td><td>A fee-funded asset basket paid to holders should get a quick legal review before marketing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="verify">
+    <div class="section-head">
+      <div class="mono">10 · Verification</div>
+      <div><h2>How we'll know it works.</h2></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="k">01</div><p><b>Unit tests</b> (<code>cd keeper &amp;&amp; npx vitest</code>): credits sum to received minus carry, the minimum-pot skip, rent gating, dust carry, filter edge cases, and resume after a crash at every step.</p></div>
+      <div class="row"><div class="k">02</div><p><b>Dry run</b> (<code>npm run round -- --dry-run</code>): print the basket, quotes, eligible wallets and planned transfers from live Pod and Jupiter data, without sending.</p></div>
+      <div class="row"><div class="k">03</div><p><b>Local fork.</b> Clone the target mints, pools and Jupiter into <code>solana-test-validator</code> (or Surfpool), run a full round and check recipient balances.</p></div>
+      <div class="row"><div class="k">04</div><p><b>Mainnet canary.</b> Cap the pot at about 0.2 SOL, check buy and transfer signatures on Solscan, and confirm the published receipt matches the chain.</p></div>
+      <div class="row"><div class="k">05</div><p><b>Website.</b> Compare live numbers with Pod's market data and test the wallet checker against a known holder.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="label">POD5 · naviklabs</div>
+      <h3>Hold one coin. Receive the top five.</h3>
+    </div>
+    <div>
+      <p>Sources: ember5.xyz and its docs page; orcapod.fun guide, Stock Dock and API docs; live data from <code>orcapod.fun/api/solana/markets</code> and <code>/payouts</code>, October 7, 2026. Styling follows DESIGN.md (Cohere-inspired), with open-source font fallbacks.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('pod5-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('themeToggle').addEventListener('click', function () {
+      var current = root.getAttribute('data-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('pod5-theme', next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

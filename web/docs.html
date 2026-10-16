@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How POD5 works | POD5 docs</title>
+<meta name="description" content="How POD5 turns trading fees into the top Pod coins for holders: who qualifies, how shares are split, why small shares wait, how the five are picked, and what it all costs.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23003c33'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='16' font-weight='700' text-anchor='middle' fill='white'%3E5%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  try { var t = localStorage.getItem('pod5-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<script type="module" src="/src/docs.ts"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="announce">POD5 pays holders in up to five top Pod coins every 15 minutes. Early, thin and risky.<a href="#risks">Read the risks</a></div>
+
+<header class="nav">
+  <a class="brand" href="index.html" aria-label="POD5 home">POD5</a>
+  <nav class="nav-actions" aria-label="Primary">
+    <a class="nav-link" href="docs.html" aria-current="page">Docs</a>
+    <button class="icon-btn" type="button" id="themeToggle" aria-pressed="false" aria-label="Switch theme">
+      <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+    </button>
+    <a class="btn-primary" id="tradeBtn" href="https://orcapod.fun/markets" target="_blank" rel="noopener noreferrer">Trade on Pod</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap docs">
+  <div class="docs-hero">
+    <div class="mono">Docs</div>
+    <h1>How POD5 works</h1>
+    <p class="lede">One coin that pays you in up to five. Here is what happens in a round, who qualifies, how your share is worked out, why a small share can wait, how the coins are picked, and what the whole thing costs.</p>
+  </div>
+
+  <div class="docs-layout">
+    <nav class="toc" aria-label="On this page">
+      <ol>
+        <li><a href="#loop">The loop</a></li>
+        <li><a href="#qualify">Who qualifies</a></li>
+        <li><a href="#share">Your share</a></li>
+        <li><a href="#waits">Why a share waits</a></li>
+        <li><a href="#picking">Picking the five</a></li>
+        <li><a href="#costs">What it costs</a></li>
+        <li><a href="#risks">Risks</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+
+      <section id="loop" aria-labelledby="loopH">
+        <div class="mono">01 &middot; The loop</div>
+        <h2 id="loopH">Fees in, five coins out</h2>
+        <p>POD5 is a coin on <a href="https://orcapod.fun" target="_blank" rel="noopener noreferrer">orcapod.fun</a>, where every coin trades in its own Orca pool and every trade pays a flat 2% fee. For most coins that fee goes to the creator. For POD5 it is spent on other Pod coins and handed to the people holding POD5.</p>
+        <ol class="steps">
+          <li><span class="k">01</span><div><b>Fees collect.</b> Of Pod&rsquo;s 2% fee, 70% is paid in SOL to POD5&rsquo;s keeper wallet. That balance is the &ldquo;fees waiting&rdquo; number on the home page. Nothing else funds the payouts.</div></li>
+          <li><span class="k">02</span><div><b>A round starts.</b> Every 15 minutes the keeper sets aside what the round itself will cost in network fees and a small operating reserve. What is left is the pot. If the pot is too small to be worth spending, the round skips and the money rolls into the next one.</div></li>
+          <li><span class="k">03</span><div><b>The five are picked.</b> Pod coins are ranked by market cap and the first five that pass every safety filter make the basket. Often fewer than five pass, and that is fine: the pot is simply split between the ones that do.</div></li>
+          <li><span class="k">04</span><div><b>The pot buys the basket.</b> It is divided into equal slices, one per coin, and each slice buys its coin through Jupiter. Holders are credited with what actually arrived in the wallet, never with what a quote promised.</div></li>
+          <li><span class="k">05</span><div><b>Shares are booked.</b> Every qualifying wallet is credited in proportion to its POD5 balance. Leftover fractions of a token are not handed to anyone; they carry into the next round.</div></li>
+          <li><span class="k">06</span><div><b>Coins are sent.</b> There is nothing to claim. Each share is pushed to your wallet as soon as sending it is worth more than it costs (see below).</div></li>
+        </ol>
+        <p>Every round writes a public receipt: what was bought, how much SOL it used, how many transfers went out and the transaction signatures. The <a href="index.html#rounds">recent rounds</a> list links each one to Solscan.</p>
+      </section>
+
+      <section id="qualify" aria-labelledby="qualifyH">
+        <div class="mono">02 &middot; Who qualifies</div>
+        <h2 id="qualifyH">At least $30 of POD5</h2>
+        <p>A wallet is booked into a round if it holds at least $30 worth of POD5 at the moment that round runs. The line is set in dollars, not tokens, so it moves with the price instead of drifting out of date.</p>
+        <p>Some addresses never get a share, however much they hold:</p>
+        <ul class="plain">
+          <li><b>Program-owned addresses.</b> Pool vaults, escrows and anything controlled by code rather than a person. The pool holds a big part of the supply, and paying it would mean paying the liquidity, not holders.</li>
+          <li><b>The keeper wallet, the deployer and Pod&rsquo;s own wallets.</b></li>
+        </ul>
+        <p>Balances are read when the round runs, so there is no lock-up and nothing to register. Hold POD5 when a round fires and you are in it. If you keep your coins on an exchange, the exchange holds them, not you, so hold POD5 in a wallet you control.</p>
+        <p>You can check any wallet on the <a href="index.html#wallet">home page</a>.</p>
+      </section>
+
+      <section id="share" aria-labelledby="shareH">
+        <div class="mono">03 &middot; Your share</div>
+        <h2 id="shareH">By balance, down to the last unit</h2>
+        <p>Each coin bought in a round is divided among qualifying wallets in proportion to their POD5. If your balance is 1% of all qualifying POD5, you are credited 1% of every coin bought that round.</p>
+        <p>So the split is not equal per wallet. A bigger bag earns a bigger share of every coin in every round, and your slice also depends on how many other wallets qualify, not just on what you hold.</p>
+        <p>The maths is done in whole token units. What integer division leaves over, usually a few units per coin, stays in the pot for next time.</p>
+      </section>
+
+      <section id="waits" aria-labelledby="waitsH">
+        <div class="mono">04 &middot; Why a share waits</div>
+        <h2 id="waitsH">The cost of receiving a token</h2>
+        <p>On Solana, holding a token means having a token account for it, and opening one costs about 0.002 SOL in rent. If your wallet has never held a particular coin, sending it that coin means opening the account first.</p>
+        <p>So the keeper follows one rule, for each wallet and each coin:</p>
+        <ul class="plain">
+          <li><b>You already have an account for that coin.</b> Your share is sent right away, however small. There is nothing extra to pay.</li>
+          <li><b>You do not.</b> Your share is recorded and keeps growing round after round until it is worth more than the account rent. Then the account is opened, the rent is taken out of the share itself and everything that built up is sent in one go.</li>
+        </ul>
+        <p>The rent is not lost. It sits in your own token account and you get it back if you ever close that account. And the small piece of the coin withheld to pay for it goes back into the pot for everyone.</p>
+        <p>&ldquo;I have not received anything yet&rdquo; and &ldquo;I have not been credited&rdquo; are different things. Every qualifying wallet is credited in every round that runs. Only the delivery is staggered, so the project never spends more on postage than the parcel is worth. The wallet checker shows your pending shares.</p>
+      </section>
+
+      <section id="picking" aria-labelledby="pickingH">
+        <div class="mono">05 &middot; Picking the five</div>
+        <h2 id="pickingH">Biggest first, then safety checks</h2>
+        <p>The keeper ranks every coin on Pod by market cap and walks down the list, keeping a coin only if it passes all of these:</p>
+        <ul class="checks">
+          <li>Not flagged as suspect or paused by Pod, and at least 24 hours old.</li>
+          <li>At least $5K of liquidity in its pool.</li>
+          <li>At least 50 holders, $1K of volume and 20 trades over the last 24 hours.</li>
+          <li>No freeze authority and no mint authority on the token, so nobody can lock your coins or print more.</li>
+          <li>A Jupiter route exists and the price impact of the buy is 3% or less.</li>
+        </ul>
+        <p>Coins are identified by mint address, never by ticker. Pod already has several lookalike tickers, and only the mint is unique.</p>
+        <div class="callout">
+          <h3>Why &ldquo;up to five&rdquo;</h3>
+          <p>Pod is young and most of its coins are thin. Today usually only one or two clear the bar. We would rather buy fewer coins that can absorb the buy than five that cannot. The basket fills out as Pod grows. The home page lists every coin that was passed over, with the reason.</p>
+        </div>
+      </section>
+
+      <section id="costs" aria-labelledby="costsH">
+        <div class="mono">06 &middot; What it costs</div>
+        <h2 id="costsH">Where the money goes before it reaches you</h2>
+        <p>As a rough guide, on $1,000 of POD5 trading the keeper receives about $14 in SOL (2% fee, 70% of it). Several costs come out before holders see coins:</p>
+        <ul class="rows-list">
+          <li><b>The target coin&rsquo;s own 2% Pod fee.</b> Every buy of a Pod coin pays that coin&rsquo;s trading fee, like any other buyer.</li>
+          <li><b>Price impact.</b> Buying moves the price a little. Buys that would move it more than 3% are skipped, and no single buy is allowed to be more than about 1% of a pool. Anything over that cap rolls to the next round.</li>
+          <li><b>Network fees and token-account rent.</b> Swaps and transfers cost SOL. Opening a new token account costs about 0.002 SOL, taken from the share of the wallet that needs it.</li>
+          <li><b>A small operating reserve.</b> The keeper holds back some SOL so it can always pay for the next round.</li>
+        </ul>
+        <p>These are the ordinary costs of buying and moving tokens on Solana. The home page shows how much SOL each round spent, so you can see the pot, the spend and the result side by side.</p>
+      </section>
+
+      <section id="risks" aria-labelledby="risksH">
+        <div class="mono">07 &middot; Risks</div>
+        <h2 id="risksH">Read this before you buy</h2>
+        <ul class="plain">
+          <li><b>Thin markets.</b> Most Pod coins are days old with little liquidity. They can fall to nothing, and selling what you receive may move the price against you.</li>
+          <li><b>Gaming.</b> Someone could try to push a micro-cap into the top five to sell into the keeper&rsquo;s buys. The filters and the price-impact cap limit this, they do not remove it.</li>
+          <li><b>Pod dependency.</b> The fee comes from Pod. If Pod stops paying out or changes how it works, nothing flows in.</li>
+          <li><b>Operations.</b> The keeper is a hot wallet run by the project. It holds only the working balance, but software and keys can fail.</li>
+          <li><b>Not advice.</b> POD5 is an experiment, not an investment product. Payouts depend on trading volume and are not guaranteed.</li>
+        </ul>
+      </section>
+
+      <section id="faq" aria-labelledby="faqH">
+        <div class="mono">08 &middot; FAQ</div>
+        <h2 id="faqH">Questions people ask</h2>
+        <div class="faq">
+          <details><summary>Do I need to claim or stake anything?</summary><p>No. Coins are sent to the wallet that holds POD5. There is no claim page, no staking and no voting.</p></details>
+          <details><summary>I hold POD5 but received nothing. Why?</summary><p>Check the amount first: you need at least $30 of POD5 when a round runs. If you do qualify, your share may be waiting because you do not yet have a token account for that coin and the share has not grown past the rent. Paste your address into the <a href="index.html#wallet">wallet checker</a> to see delivered and pending amounts.</p></details>
+          <details><summary>Why did I only get one or two coins?</summary><p>Because only that many Pod coins passed the filters in the rounds that paid you. The basket is &ldquo;up to five&rdquo;, never padded with coins that fail the checks.</p></details>
+          <details><summary>Does selling POD5 hurt my payout?</summary><p>Your share follows your balance at the time of each round, so selling lowers your future shares, and dropping below $30 stops them. Coins already delivered are yours to keep.</p></details>
+          <details><summary>Can the five coins be rigged?</summary><p>The ranking and filters are public and fixed, but a determined actor can still try to game any ranking. That is why the filters look at age, holders, volume, liquidity and Pod&rsquo;s own suspect flag, and why the price-impact cap exists. It reduces the risk, it cannot erase it.</p></details>
+          <details><summary>What if a round fails halfway?</summary><p>Each step is saved before anything is sent, and after a restart the keeper checks what actually landed on-chain, so nothing is bought or sent twice. A slice that cannot be bought safely rolls into the next round.</p></details>
+          <details><summary>Where can I verify all of this?</summary><p>Every purchase and transfer is an on-chain transaction, and each round&rsquo;s receipt is linked from the home page. The keeper wallet balance is read straight from the chain.</p></details>
+          <details><summary>Is POD5 run by Pod?</summary><p>No. POD5 is an independent coin launched on orcapod.fun. It uses Pod&rsquo;s public data and its trading fee, and it is not endorsed by Pod.</p></details>
+        </div>
+      </section>
+
+      <p class="note">POD5 is an experiment and nothing here is financial advice.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="mono coral">Not financial advice</div>
+      <p class="foot-big">Young coins are thin and volatile. You can lose everything you hold.</p>
+      <p class="foot-small">POD5 is an independent project built on orcapod.fun and is not run or endorsed by Pod. Baskets are chosen by fixed rules, not recommendations. Do your own research.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Live dashboard</a>
+      <a href="docs.html">How POD5 works</a>
+      <a href="docs.html#faq">FAQ</a>
+      <a href="https://orcapod.fun/markets" target="_blank" rel="noopener noreferrer">Pod markets</a>
+      <a id="footKeeper" href="https://solscan.io" target="_blank" rel="noopener noreferrer" hidden>Keeper wallet on Solscan</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

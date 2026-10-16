@@ -1,0 +1,189 @@
+{
+ "updatedAt": 1792067200,
+ "cluster": "mainnet-beta",
+ "pod5Mint": "",
+ "keeperWallet": "",
+ "intervalMin": 15,
+ "minHoldUsd": 30,
+ "maxCoins": 5,
+ "basket": [
+  {
+   "mint": "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6",
+   "symbol": "POD",
+   "name": "orcapod.fun",
+   "image": "https://orcapod.fun/img/bafkreieqlt6m6mucupyi5ndo7zcgj264acr6wjixtfj5obup5ov77es7cu",
+   "pool": "4759SGgn3ypWtPHoBq65wCWa1t1tbdA5cwsKjoHuX39d",
+   "decimals": 6,
+   "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+   "priceUsd": 8.63376869116662e-05,
+   "marketCapUsd": 86337.6869116662,
+   "liquidityUsd": 13737.070624176387,
+   "volume24hUsd": 9098.03933163747,
+   "change24h": -20.528067623015545,
+   "holders": 1390
+  }
+ ],
+ "rejected": [
+  {
+   "mint": "5UUdjHNuDk1vGWwPwDgnskqZPDVnow9qAQ9JA3K8WbP7",
+   "symbol": "CARG10",
+   "reason": "liquidity $1,847, needs $5K; 24h volume $666, needs $1K; 15 trades in 24h, needs 20"
+  },
+  {
+   "mint": "9javfJgSyGyipTGpSnfnXLB3Ev19q4atSwh4SqB7yMYd",
+   "symbol": "ORCAT",
+   "reason": "liquidity $677, needs $5K; 13 holders, needs 50; 24h volume $158, needs $1K; 1 trades in 24h, needs 20"
+  },
+  {
+   "mint": "4UhmQ7C6sKn4vSBYcWySSYU3akzRV6NkvaRqdsAFx948",
+   "symbol": "ACRO",
+   "reason": "liquidity $318, needs $5K; 4 holders, needs 50; 24h volume $0, needs $1K; 0 trades in 24h, needs 20"
+  },
+  {
+   "mint": "HTS6wndckxXXdZWnDdY6qStY8TPZjtzTA5VdHjeAgCFy",
+   "symbol": "PODCAT",
+   "reason": "liquidity $94, needs $5K; 5 holders, needs 50; 24h volume $0, needs $1K; 0 trades in 24h, needs 20"
+  },
+  {
+   "mint": "Awssn6niX7YwCZJRHrMNZLGbuD1TPpayGceXb4Pp5fRo",
+   "symbol": "ORCASM",
+   "reason": "liquidity $74, needs $5K; 13 holders, needs 50; 24h volume $44, needs $1K; 1 trades in 24h, needs 20"
+  },
+  {
+   "mint": "9tq9sPsWNvxcjyREqL46dKbQ3hJeSAdbYUGgczjTWpiZ",
+   "symbol": "PODCAT",
+   "reason": "liquidity $570, needs $5K; 24h volume $45, needs $1K; 3 trades in 24h, needs 20"
+  },
+  {
+   "mint": "8s7APPxWjnKTmRcFQi6jUk7L3V3wmVtBft5TR63jvxt2",
+   "symbol": "PINU",
+   "reason": "liquidity $20, needs $5K; 3 holders, needs 50; 24h volume $0, needs $1K; 0 trades in 24h, needs 20"
+  },
+  {
+   "mint": "5E4TTsnfg71xLVqsiXHDD2nEyMUXGfVNS1kqGPz93V8F",
+   "symbol": "PORCA",
+   "reason": "liquidity $4, needs $5K; 2 holders, needs 50; 24h volume $0, needs $1K; 0 trades in 24h, needs 20"
+  }
+ ],
+ "rounds": [
+  {
+   "id": 106,
+   "startedAt": 1792066300,
+   "finishedAt": 1792066407,
+   "status": "DONE",
+   "potLamports": "339000000",
+   "eligibleWallets": 92,
+   "basket": [
+    {
+     "mint": "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6",
+     "symbol": "POD",
+     "decimals": 6,
+     "spentLamports": "339000000",
+     "receivedRaw": "384477291289",
+     "signature": null
+    }
+   ],
+   "transfersSent": 10,
+   "deliverySignatures": []
+  },
+  {
+   "id": 105,
+   "startedAt": 1792065400,
+   "finishedAt": 1792065520,
+   "status": "DONE",
+   "potLamports": "383000000",
+   "eligibleWallets": 103,
+   "basket": [
+    {
+     "mint": "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6",
+     "symbol": "POD",
+     "decimals": 6,
+     "spentLamports": "383000000",
+     "receivedRaw": "434379948566",
+     "signature": null
+    }
+   ],
+   "transfersSent": 17,
+   "deliverySignatures": []
+  },
+  {
+   "id": 104,
+   "startedAt": 1792064500,
+   "finishedAt": 1792064540,
+   "status": "SKIPPED",
+   "skippedReason": "Pot below the minimum; carried over",
+   "potLamports": "21000000",
+   "eligibleWallets": 0,
+   "basket": [],
+   "transfersSent": 0,
+   "deliverySignatures": []
+  },
+  {
+   "id": 103,
+   "startedAt": 1792063600,
+   "finishedAt": 1792063689,
+   "status": "DONE",
+   "potLamports": "187000000",
+   "eligibleWallets": 85,
+   "basket": [
+    {
+     "mint": "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6",
+     "symbol": "POD",
+     "decimals": 6,
+     "spentLamports": "187000000",
+     "receivedRaw": "212086293425",
+     "signature": null
+    }
+   ],
+   "transfersSent": 19,
+   "deliverySignatures": []
+  },
+  {
+   "id": 102,
+   "startedAt": 1792062700,
+   "finishedAt": 1792062817,
+   "status": "DONE",
+   "potLamports": "346000000",
+   "eligibleWallets": 80,
+   "basket": [
+    {
+     "mint": "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6",
+     "symbol": "POD",
+     "decimals": 6,
+     "spentLamports": "346000000",
+     "receivedRaw": "392416350401",
+     "signature": null
+    }
+   ],
+   "transfersSent": 6,
+   "deliverySignatures": []
+  },
+  {
+   "id": 101,
+   "startedAt": 1792061800,
+   "finishedAt": 1792061890,
+   "status": "DONE",
+   "potLamports": "208000000",
+   "eligibleWallets": 85,
+   "basket": [
+    {
+     "mint": "F4K2SbLNgyz9gzNqT8bPeLpRkxy4oMA9twaffUDdZtB6",
+     "symbol": "POD",
+     "decimals": 6,
+     "spentLamports": "208000000",
+     "receivedRaw": "235903470761",
+     "signature": null
+    }
+   ],
+   "transfersSent": 11,
+   "deliverySignatures": []
+  }
+ ],
+ "totals": {
+  "rounds": 106,
+  "roundsRun": 105,
+  "spentLamports": "24871000000",
+  "transfersSent": 1071,
+  "walletsPaid": 212
+ }
+}

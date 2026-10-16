@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Secrets: never commit keys or env files
+.env
+.env.*
+!.env.example
+*.keypair.json
+id.json
+keypair*.json
+
+# Keeper runtime state (ledger DB, lock, kill switch)
+keeper/data/
+*.db
+*.db-*
+*.lock
+
+# Keeper output published for the site (generated)
+keeper/public/
+web/public/data/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Local agent tooling
+.claude/
